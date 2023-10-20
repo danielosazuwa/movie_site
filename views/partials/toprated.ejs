@@ -1,0 +1,17 @@
+<div id="popular" class="container-sm">
+  <h5>Top Rated Movies</h5>
+  <div class="grid">
+    <div id="gridCenter`" class="card">
+      <img
+        class="img-fluid rounded"
+        src="https://image.tmdb.org/t/p/w300<%=movies.poster_path  %>"
+        alt="<%= movies.title %>"
+      />
+      <%if (locals.movies.name){%>
+      <p><%= movies.name %></p>
+      <%}else{%>
+      <p><%= movies.title %></p>
+      <%}%>
+    </div>
+  </div>
+</div>

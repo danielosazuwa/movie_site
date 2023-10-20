@@ -1,0 +1,16 @@
+<div id="popular" class="container-sm">
+  <h5>Popular Movies</h5>
+    <div class="grid">
+    <%data.results.forEach(function(data){%>
+    <div id="gridCenter`" class="card">
+      <img
+        class="img-fluid rounded"
+        src="https://image.tmdb.org/t/p/w300<%=data.poster_path  %>"
+        alt="<%= data.title %>"
+      />
+      <p><%= data.title %></p>
+    </div>
+
+    <%}) %>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+#RmdBanner {
+  background: rgb(102, 27, 102);
+  text-align: center;
+  color: black;
+  padding: 1rem;
+}
+.grid {
+  /* height: 300vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;*/
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 15px;
+  text-align: center;
+}
