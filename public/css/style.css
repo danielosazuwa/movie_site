@@ -1,5 +1,8 @@
+body {
+  background: #00abe4;
+}
 #RmdBanner {
-  background: rgb(102, 27, 102);
+  background: #ffcc00;
   text-align: center;
   color: black;
   padding: 1rem;
@@ -14,4 +17,10 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 15px;
   text-align: center;
+}
+
+form#searchbar {
+  background: #f0f0f0;
+  width: 100%;
+  padding: 1rem;
 }

@@ -1,0 +1,19 @@
+<div id="popular" class="container-fluid">
+  <h5>Trending</h5>
+  <div class="grid">
+    <% movies.forEach(function(movie){%>
+    <div id="gridCenter`" class="card">
+      <img
+        class="img-fluid rounded"
+        src="https://image.tmdb.org/t/p/w300<%=movie.poster_path  %>"
+        alt="movies.title"
+      />
+      <%if (locals.movie = movie.title){%>
+      <p><%= movie.title %></p>
+      <%}else{%>
+      <p><%= movie.name %></p>
+      <%}%>
+    </div>
+    <%}) %>
+  </div>
+</div>
