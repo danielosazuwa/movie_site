@@ -1,6 +1,6 @@
-<div id="popular" class="container-sm">
+<div id="popular" class="container-fluid">
   <h5>Popular Movies</h5>
-    <div class="grid">
+  <div class="grid">
     <%data.results.forEach(function(data){%>
     <div id="gridCenter`" class="card">
       <img
@@ -9,6 +9,9 @@
         alt="<%= data.title %>"
       />
       <p><%= data.title %></p>
+      <a href=""
+        ><button class="btn btn-outline-success">See details</button></a
+      >
     </div>
 
     <%}) %>

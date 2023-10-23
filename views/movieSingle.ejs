@@ -1,0 +1,11 @@
+<%- include("partials/header.ejs") %>
+<img
+  class="img-fluid rounded"
+  src="https://image.tmdb.org/t/p/w300<%=display.poster_path  %>"
+  alt=""
+/>
+
+<p><%= display.title %></p>
+
+<p><%= display.overview %></p>
+<%- include("partials/footer.ejs") %>
