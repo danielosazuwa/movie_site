@@ -1,5 +1,6 @@
-<div id="popular" class="container-fluid">
-  <h5>Trending</h5>
+
+<div id="popular" class="container-fluid">  
+  <h5>Trending🔥</h5>
   <div class="grid">
     <% movies.forEach(function(movie){%>
     <div id="gridCenter`" class="card">
@@ -9,9 +10,9 @@
         alt="movies.title"
       />
       <%if (locals.movie = movie.title){%>
-      <p><%= movie.title %></p>
+      <p><a href=""><%= movie.title %></a></p>
       <%}else{%>
-      <p><%= movie.name %></p>
+      <p><a href=""><%= movie.name %></a></p>
       <%}%>
     </div>
     <%}) %>

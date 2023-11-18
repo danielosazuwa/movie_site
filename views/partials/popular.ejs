@@ -2,16 +2,15 @@
   <h5>Popular Movies</h5>
   <div class="grid">
     <%data.results.forEach(function(data){%>
-    <div id="gridCenter`" class="card">
-      <img
+      <div id="gridCenter`" class="card">
+        <a href="/<%= data.id %>">
+        <img
         class="img-fluid rounded"
         src="https://image.tmdb.org/t/p/w300<%=data.poster_path  %>"
         alt="<%= data.title %>"
-      />
-      <p><%= data.title %></p>
-      <a href=""
-        ><button class="btn btn-outline-success">See details</button></a
-      >
+      /></a>
+      <p><a href="/<%= data.id %>"><%= data.title %></a></p>
+      
     </div>
 
     <%}) %>

@@ -11,6 +11,8 @@ const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 const APIKey = "api_key=ed7c4374cf9628a19e0132636e35c40b";
+
+//This is the root route
 app.get("/", async (req, res) => {
   try {
     const randomNum = Math.floor(Math.random() * (200 - 0 + 1) + 0);
@@ -54,6 +56,7 @@ app.get("/", async (req, res) => {
   }
 });
 
+//This is for the search route
 app.post("/search/movie", async (req, res) => {
   try {
     const requestedmovieName = _.lowerCase(req.body.movie);
@@ -69,6 +72,7 @@ app.post("/search/movie", async (req, res) => {
   }
 });
 
+//This is for the movie details
 app.get("/:Id", async (req, res) => {
   try {
     const movieId = req.params.Id;
@@ -84,12 +88,27 @@ app.get("/:Id", async (req, res) => {
   }
 });
 
+app.get("/:Id", async (req, res) => {
+  try {
+    const movieId = req.params.Id;
+    console.log(movieId);
+    const movieIdDetails = await axios.get(
+      "https://api.themoviedb.org/3/trending/all/week?" + APIKey
+      );
+    const details = movieIdDetails.data;
+    console.log(details)
+    res.render("movieDetails.ejs", {details})
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 app.get("/movie/:movieName", async (req, res) => {
   try {
     const requestedmovieName = _.lowerCase(req.params.movieName);
     console.log(requestedmovieName);
     const movieDetails = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?api_key=ed7c4374cf9628a19e0132636e35c40b`
+      `https://api.themoviedb.org/3/movie/popular?` + APIKey
     );
     const details = movieDetails.data.results;
     details.forEach((result) => {
