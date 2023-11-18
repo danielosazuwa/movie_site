@@ -54,6 +54,36 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.post("/search/movie", async (req, res) => {
+  try {
+    const requestedmovieName = _.lowerCase(req.body.movie);
+    // console.log(requestedmovieName);
+    const movieDetails = await axios.get(
+      'https://api.themoviedb.org/3/search/movie?query=' + requestedmovieName + "&" + APIKey
+    );
+    const details = movieDetails.data.results;
+    // console.log(details)
+    res.render("movieSingle.ejs", {details})
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.get("/:Id", async (req, res) => {
+  try {
+    const movieId = req.params.Id;
+    console.log(movieId);
+    const movieIdDetails = await axios.get(
+      "https://api.themoviedb.org/3/movie/" + movieId + "?" + APIKey  
+      );
+    const details = movieIdDetails.data;
+    console.log(details)
+    res.render("movieDetails.ejs", {details})
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 app.get("/movie/:movieName", async (req, res) => {
   try {
     const requestedmovieName = _.lowerCase(req.params.movieName);

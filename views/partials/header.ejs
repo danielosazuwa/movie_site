@@ -37,13 +37,14 @@
         <h1 id="RmdBanner">MovieRmd got all the movie recommendations you need</h1>
         <nav class="navbar bg-body-tertiary">
           <div class="container-fluid">
-            <form id="searchbar" class="d-flex" role="search" method="get">
+            <form action="/search/movie" id="searchbar" class="d-flex" role="search" method="post">
               <input
                 id="searchtab"
                 class="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                name="movie"
               />
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
