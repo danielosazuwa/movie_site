@@ -1,20 +1,33 @@
-
-<div id="popular" class="container-fluid">  
+<div id="popular" class="container-fluid">
   <h5>Trending🔥</h5>
   <div class="grid">
     <% movies.forEach(function(movie){%>
     <div id="gridCenter`" class="card">
-      <img
-        class="img-fluid rounded"
-        src="https://image.tmdb.org/t/p/w300<%=movie.poster_path  %>"
-        alt="movies.title"
-      />
+      <a href="/<%= movie.id %>"
+        ><img
+          class="img-fluid rounded"
+          src="https://image.tmdb.org/t/p/w300<%=movie.poster_path  %>"
+          alt="movies.title"
+      /></a>
+
       <%if (locals.movie = movie.title){%>
-      <p><a href=""><%= movie.title %></a></p>
+      <p>
+        <a href="/<%=movie.id  %>"><%= movie.title %></a>
+      </p>
       <%}else{%>
-      <p><a href=""><%= movie.name %></a></p>
+      <p>
+        <a href="/<%=movie.id  %>"><%= movie.name %></a>
+      </p>
       <%}%>
+
+      <!-- <button class="btn btn-danger"><a id="popup-link">See More</a></button>
+            <div id="popup-window">
+              <h1><%= movie.title %></h1>
+              <p>This is a pop-up window.</p>
+              <button id="close-button">Close</button>
+            </div>          -->
     </div>
+
     <%}) %>
   </div>
 </div>

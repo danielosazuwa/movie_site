@@ -4,13 +4,13 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import axios from "axios";
 import _ from "lodash";
+import dotenv from "dotenv";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
+dotenv.config({ path: "config.env" });
 const app = express();
 const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-const APIKey = "api_key=ed7c4374cf9628a19e0132636e35c40b";
 
 //This is the root route
 app.get("/", async (req, res) => {
@@ -19,14 +19,14 @@ app.get("/", async (req, res) => {
 
     const response = await axios.get(
       "https://api.themoviedb.org/3/movie/popular?sort_by=popularity.desc&" +
-        APIKey +
+        process.env.APIKEY +
         "&page=" +
         randomNum
     );
 
     const result = response.data;
     const all = await axios.get(
-      "https://api.themoviedb.org/3/trending/all/week?" + APIKey
+      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY
     );
 
     // const random = allResult[Math.floor(Math.random() * allResult.length)];
@@ -50,9 +50,7 @@ app.get("/", async (req, res) => {
     });
   } catch (error) {
     console.error("Failed to make request:", error.message);
-    res.render("index.ejs", {
-      error: error.message,
-    });
+    res.send("Error loading page");
   }
 });
 
@@ -62,11 +60,14 @@ app.post("/search/movie", async (req, res) => {
     const requestedmovieName = _.lowerCase(req.body.movie);
     // console.log(requestedmovieName);
     const movieDetails = await axios.get(
-      'https://api.themoviedb.org/3/search/movie?query=' + requestedmovieName + "&" + APIKey
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        requestedmovieName +
+        "&" +
+        process.env.APIKEY
     );
     const details = movieDetails.data.results;
     // console.log(details)
-    res.render("movieSingle.ejs", {details})
+    res.render("movieSingle.ejs", { details });
   } catch (error) {
     console.log(error.message);
   }
@@ -78,11 +79,11 @@ app.get("/:Id", async (req, res) => {
     const movieId = req.params.Id;
     console.log(movieId);
     const movieIdDetails = await axios.get(
-      "https://api.themoviedb.org/3/movie/" + movieId + "?" + APIKey  
-      );
+      "https://api.themoviedb.org/3/movie/" + movieId + "?" + process.env.APIKEY
+    );
     const details = movieIdDetails.data;
-    console.log(details)
-    res.render("movieDetails.ejs", {details})
+    console.log(details);
+    res.render("movieDetails.ejs", { details });
   } catch (error) {
     console.log(error.message);
   }
@@ -93,11 +94,11 @@ app.get("/:Id", async (req, res) => {
     const movieId = req.params.Id;
     console.log(movieId);
     const movieIdDetails = await axios.get(
-      "https://api.themoviedb.org/3/trending/all/week?" + APIKey
-      );
+      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY
+    );
     const details = movieIdDetails.data;
-    console.log(details)
-    res.render("movieDetails.ejs", {details})
+    console.log(details);
+    res.render("movieDetails.ejs", { details });
   } catch (error) {
     console.log(error.message);
   }
@@ -108,7 +109,7 @@ app.get("/movie/:movieName", async (req, res) => {
     const requestedmovieName = _.lowerCase(req.params.movieName);
     console.log(requestedmovieName);
     const movieDetails = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?` + APIKey
+      `https://api.themoviedb.org/3/movie/popular?` + process.env.APIKEY
     );
     const details = movieDetails.data.results;
     details.forEach((result) => {
