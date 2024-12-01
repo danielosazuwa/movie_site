@@ -18,15 +18,27 @@ app.get("/", async (req, res) => {
     const randomNum = Math.floor(Math.random() * (200 - 0 + 1) + 0);
 
     const response = await axios.get(
-      "https://api.themoviedb.org/3/movie/popular?sort_by=popularity.desc&" +
+      "https://api.themoviedb.org/3/movie/popular?include_adult=false&sort_by=popularity.desc&" +
         process.env.APIKEY +
         "&page=" +
-        randomNum
+        randomNum,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
 
     const result = response.data;
     const all = await axios.get(
-      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY
+      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
 
     // const random = allResult[Math.floor(Math.random() * allResult.length)];
@@ -67,7 +79,13 @@ app.post("/search/movie", async (req, res) => {
       "https://api.themoviedb.org/3/search/movie?query=" +
         requestedmovieName +
         "&" +
-        process.env.APIKEY
+        process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
     const details = movieDetails.data.results;
     // If no results are found, show a message
@@ -91,13 +109,22 @@ app.get("/:Id", async (req, res) => {
     const movieId = req.params.Id;
     // console.log(movieId);
     const movieIdDetails = await axios.get(
-      "https://api.themoviedb.org/3/movie/" + movieId + "?" + process.env.APIKEY
+      "https://api.themoviedb.org/3/movie/" +
+        movieId +
+        "?" +
+        process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
     const details = movieIdDetails.data;
     // console.log(details);
 
     // const trailerUrl = await axios.get(
-    //   `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${details.title} trailer&type=video&key=${process.env.YOUTUBEKEY}`
+    //   `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${details.title}trailer&type=video&${process.env.YOUTUBEKEY}`
     // );
 
     function convertMinutesToHours(minutes) {
@@ -107,7 +134,7 @@ app.get("/:Id", async (req, res) => {
     }
 
     const minutes = details.runtime;
-    console.log(convertMinutesToHours(minutes));
+    // console.log(convertMinutesToHours(minutes));
     const runtime = convertMinutesToHours(minutes);
 
     res.render("movieDetails.ejs", { details, runtime });
@@ -136,7 +163,13 @@ app.get("/movie/:movieName", async (req, res) => {
     const requestedmovieName = _.lowerCase(req.params.movieName);
     console.log(requestedmovieName);
     const movieDetails = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?` + process.env.APIKEY
+      `https://api.themoviedb.org/3/movie/popular?` + process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
     const details = movieDetails.data.results;
     details.forEach((result) => {
