@@ -1,6 +1,13 @@
 </main>
 <footer>
-    <p>MovieRmd</p>
+  <% function getYear(){%>
+    <%const now = new Date();%>
+    <% const year = now.getFullYear(); %>
+    <% return year %>
+  <%}%>
+  
+  
+    <p> &copy <%= getYear() %>  MovieRmd.com. All Rights Reserved</p>
 </footer>
 </div>
 

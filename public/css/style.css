@@ -1,3 +1,7 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
 body {
   background: #282612;
   scroll-behavior: smooth;
@@ -48,14 +52,46 @@ form#searchbar {
   display: none;
 }
 
-/* #movieDetails {
-  background: green;
-} */
+#movieDetails {
+  display: flex;
+  gap: 40px;
+  padding: 50px 0px;
+}
+
+#movieDetails > img {
+  width: 700px;
+}
+
+h5#title {
+  font-size: 25px;
+}
+
+.genre-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
 #genre {
-  display: inline;
+  text-align: center;
+  width: fit-content;
   background: #000;
+  color: white;
+  font-weight: bold;
   border: 2px solid #ffcc00;
   border-radius: 10px;
   padding: 7px;
+}
+
+.overview {
+  font-size: 20px;
+  color: #ffcc00;
+}
+
+footer {
+  color: white;
+  text-align: center;
+  padding: 20px 0px;
 }

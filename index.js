@@ -57,8 +57,12 @@ app.get("/", async (req, res) => {
 //This is for the search route
 app.post("/search/movie", async (req, res) => {
   try {
-    const requestedmovieName = _.lowerCase(req.body.movie);
+    const requestedmovieName = req.body.movie.trim();
     // console.log(requestedmovieName);
+    // Check if movie name is empty
+    if (!requestedmovieName) {
+      return res.status(400).send("Please enter a movie name.");
+    }
     const movieDetails = await axios.get(
       "https://api.themoviedb.org/3/search/movie?query=" +
         requestedmovieName +
@@ -66,10 +70,18 @@ app.post("/search/movie", async (req, res) => {
         process.env.APIKEY
     );
     const details = movieDetails.data.results;
+    // If no results are found, show a message
+    if (!details || details.length === 0) {
+      return res.status(404).render("404.ejs");
+    }
     // console.log(details)
-    res.render("movieSingle.ejs", { details });
+
+    res.render("movieSingle.ejs", {
+      details,
+    });
   } catch (error) {
     console.log(error.message);
+    res.status(500).send("An error occurred while fetching movie data.");
   }
 });
 
@@ -77,32 +89,47 @@ app.post("/search/movie", async (req, res) => {
 app.get("/:Id", async (req, res) => {
   try {
     const movieId = req.params.Id;
-    console.log(movieId);
+    // console.log(movieId);
     const movieIdDetails = await axios.get(
       "https://api.themoviedb.org/3/movie/" + movieId + "?" + process.env.APIKEY
     );
     const details = movieIdDetails.data;
-    console.log(details);
-    res.render("movieDetails.ejs", { details });
+    // console.log(details);
+
+    // const trailerUrl = await axios.get(
+    //   `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${details.title} trailer&type=video&key=${process.env.YOUTUBEKEY}`
+    // );
+
+    function convertMinutesToHours(minutes) {
+      const hours = Math.floor(minutes / 60); // Get the whole number of hours
+      const remainingMinutes = minutes % 60; // Get the remaining minutes
+      return `${hours}hr ${remainingMinutes}min`;
+    }
+
+    const minutes = details.runtime;
+    console.log(convertMinutesToHours(minutes));
+    const runtime = convertMinutesToHours(minutes);
+
+    res.render("movieDetails.ejs", { details, runtime });
   } catch (error) {
     console.log(error.message);
   }
 });
 
-app.get("/:Id", async (req, res) => {
-  try {
-    const movieId = req.params.Id;
-    console.log(movieId);
-    const movieIdDetails = await axios.get(
-      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY
-    );
-    const details = movieIdDetails.data;
-    console.log(details);
-    res.render("movieDetails.ejs", { details });
-  } catch (error) {
-    console.log(error.message);
-  }
-});
+// app.get("/:Id", async (req, res) => {
+//   try {
+//     const movieId = req.params.Id;
+//     // console.log(movieId);
+//     const movieIdDetails = await axios.get(
+//       "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY
+//     );
+//     const details = movieIdDetails.data;
+//     // console.log(details);
+//     res.render("movieDetails.ejs", { details });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// });
 
 app.get("/movie/:movieName", async (req, res) => {
   try {
@@ -114,7 +141,7 @@ app.get("/movie/:movieName", async (req, res) => {
     const details = movieDetails.data.results;
     details.forEach((result) => {
       const storedTitle = _.lowerCase(result.title);
-      console.log(storedTitle);
+      // console.log(storedTitle);
       if (storedTitle === requestedmovieName) {
         res.render("movieSingle.ejs", {
           display: result,
