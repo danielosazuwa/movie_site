@@ -21,12 +21,24 @@ app.get("/", async (req, res) => {
       "https://api.themoviedb.org/3/movie/popular?sort_by=popularity.desc&" +
         process.env.APIKEY +
         "&page=" +
-        randomNum
+        randomNum,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
 
     const result = response.data;
     const all = await axios.get(
-      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY
+      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
 
     // const random = allResult[Math.floor(Math.random() * allResult.length)];
@@ -63,7 +75,13 @@ app.post("/search/movie", async (req, res) => {
       "https://api.themoviedb.org/3/search/movie?query=" +
         requestedmovieName +
         "&" +
-        process.env.APIKEY
+        process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
     const details = movieDetails.data.results;
     // console.log(details)
@@ -79,7 +97,16 @@ app.get("/:Id", async (req, res) => {
     const movieId = req.params.Id;
     console.log(movieId);
     const movieIdDetails = await axios.get(
-      "https://api.themoviedb.org/3/movie/" + movieId + "?" + process.env.APIKEY
+      "https://api.themoviedb.org/3/movie/" +
+        movieId +
+        "?" +
+        process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
     const details = movieIdDetails.data;
     console.log(details);
@@ -94,7 +121,13 @@ app.get("/:Id", async (req, res) => {
     const movieId = req.params.Id;
     console.log(movieId);
     const movieIdDetails = await axios.get(
-      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY
+      "https://api.themoviedb.org/3/trending/all/week?" + process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
     const details = movieIdDetails.data;
     console.log(details);
@@ -109,7 +142,13 @@ app.get("/movie/:movieName", async (req, res) => {
     const requestedmovieName = _.lowerCase(req.params.movieName);
     console.log(requestedmovieName);
     const movieDetails = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?` + process.env.APIKEY
+      `https://api.themoviedb.org/3/movie/popular?` + process.env.APIKEY,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.ACCESSTOKEN,
+        },
+      }
     );
     const details = movieDetails.data.results;
     details.forEach((result) => {
