@@ -18,7 +18,7 @@ app.get("/", async (req, res) => {
     const randomNum = Math.floor(Math.random() * (200 - 0 + 1) + 0);
 
     const response = await axios.get(
-      "https://api.themoviedb.org/3/movie/popular?include_adult=false&sort_by=popularity.desc&" +
+      "https://api.themoviedb.org/3/movie/popular?sort_by=popularity.desc&" +
         process.env.APIKEY +
         "&page=" +
         randomNum,
