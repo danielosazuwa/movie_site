@@ -3,40 +3,38 @@
   <img
     class="img-fluid rounded"
     src="https://image.tmdb.org/t/p/w300<%=details.poster_path %>"
-    alt=""
+    alt="movie poster"
   />
-  <div>
-    <h5>
-      <%= details.original_title %> <br /><br />
 
+  <div>
+    <h5 id="title"><%= details.title %></h5>
+
+    <div class="genre-container">
       <% details.genres.forEach(genre => {%>
       <p id="genre"><%= genre.name %></p>
       <%}); %>
-      <br />
+    </div>
 
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="15"
-        height="15"
-        viewBox="0 0 24 24"
-        style="background-color: #ffcc00"
-      >
-        <path
-          d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.326 18.266l-4.326-2.314-4.326 2.313.863-4.829-3.537-3.399 4.86-.671 2.14-4.415 2.14 4.415 4.86.671-3.537 3.4.863 4.829z"
-        />
+    <div class="overview">
+      <p><%= details.overview %></p>
+    </div>
 
-        <p><%= details.popularity %></p>
-      </svg>
+    <p style="color: white">
+      Status : <%= details.status %> <br />
+      Release date : <%= details.release_date %> YY/MM/DD
+    </p>
 
-      <p style="color: #ffcc00"><%= details.overview %></p>
-    </h5>
+    <p style="color: white">Runtime : <%= runtime %></p>
+
+    <a href="<%= details.homepage %>" target="_blank"
+      >Click link for more details</a
+    >
+    
 
     <!-- <a href=""
-            ><button class="btn btn-outline-success">See details</button></a
-          > -->
+              ><button class="btn btn-outline-success">See details</button></a
+            > -->
   </div>
-
-  <
 </div>
 
 <%- include("partials/footer.ejs") %>

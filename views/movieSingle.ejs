@@ -1,21 +1,23 @@
 <%- include("partials/header.ejs") %>
 <div class="grid">
-
-<% details.forEach(function(display){%>
+  <% details.forEach(function(display){%>
   <div id="gridCenter" class="card">
     <% if(display.poster_path === null){%>
-      <p style="padding-top: 50px;"><%= display.overview %></p>
+    <p style="padding-top: 50px"><%= display.overview %></p>
     <%}else{%>
+    <a href="/<%= display.id %>">
       <img
-      class="img-fluid rounded"
-      src="https://image.tmdb.org/t/p/w300<%=display.poster_path  %>"
-      alt=""
-    />
+        class="img-fluid rounded"
+        src="https://image.tmdb.org/t/p/w300<%=display.poster_path  %>"
+        alt=""
+      />
+    </a>
+
     <%} %>
 
-<p><a href="/<%= display.id %>"><%= display.title %></a></p>
-</div>
-<%}) %>
+    <p><a href="/<%= display.id %>"><%= display.title %></a></p>
+  </div>
+  <%}) %>
 </div>
 
 <%- include("partials/footer.ejs") %>
