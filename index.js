@@ -14,7 +14,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //This is the root route
 app.get("/", async (req, res) => {
+  const ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.socket.remoteAddress;
+
+  console.log('User IP:', ip);  // Log the IP to check
+
   try {
+    const userIp = await axios.get(`http://ip-api.com/json/${ip}`);
+    const country = userIp.data.country;
+
     const randomNum = Math.floor(Math.random() * (200 - 0 + 1) + 0);
 
     const response = await axios.get(
@@ -59,6 +66,7 @@ app.get("/", async (req, res) => {
     res.render("index.ejs", {
       data: result,
       movies: random,
+      ip: ip, country: country
     });
   } catch (error) {
     console.error("Failed to make request:", error.message);
